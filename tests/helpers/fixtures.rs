@@ -162,7 +162,9 @@ where
     let s = match color {
         shpool_vt100::Color::Default => unreachable!(),
         shpool_vt100::Color::Idx(n) => format!("{n}"),
-        shpool_vt100::Color::Rgb(r, g, b) => format!("#{r:02x}{g:02x}{b:02x}"),
+        shpool_vt100::Color::Rgb(r, g, b) => {
+            format!("#{r:02x}{g:02x}{b:02x}")
+        }
     };
     serializer.serialize_str(&s)
 }

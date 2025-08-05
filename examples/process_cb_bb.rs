@@ -10,7 +10,11 @@ impl shpool_vt100::Callbacks for Callbacks {
         std::hint::black_box(screen);
     }
 
-    fn resize(&mut self, screen: &mut shpool_vt100::Screen, request: (u16, u16)) {
+    fn resize(
+        &mut self,
+        screen: &mut shpool_vt100::Screen,
+        request: (u16, u16),
+    ) {
         std::hint::black_box((screen, request));
     }
 

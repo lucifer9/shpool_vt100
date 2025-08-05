@@ -1,11 +1,11 @@
 mod fixtures;
-pub use fixtures::fixture;
 pub use fixtures::FixtureScreen;
+pub use fixtures::fixture;
 
 pub static mut QUIET: bool = false;
 
 macro_rules! is {
-    ($got:expr, $expected:expr) => {
+    ($got:expr_2021, $expected:expr_2021) => {
         if ($got) != ($expected) {
             if !unsafe { QUIET } {
                 eprintln!(
@@ -21,7 +21,7 @@ macro_rules! is {
     };
 }
 macro_rules! ok {
-    ($e:expr) => {
+    ($e:expr_2021) => {
         if !($e) {
             if !unsafe { QUIET } {
                 eprintln!("!{}", stringify!($e));
@@ -81,7 +81,9 @@ pub fn compare_screens(
     }
     is!(
         Bytes(&got.contents_diff(shpool_vt100::Parser::default().screen())),
-        Bytes(&expected.contents_diff(shpool_vt100::Parser::default().screen()))
+        Bytes(
+            &expected.contents_diff(shpool_vt100::Parser::default().screen())
+        )
     );
 
     is!(Bytes(&got.contents_diff(got)), Bytes(b""));
@@ -128,7 +130,9 @@ pub fn rows_formatted_reproduces_state(input: &[u8]) -> bool {
     rows_formatted_reproduces_screen(parser.screen())
 }
 
-pub fn contents_formatted_reproduces_screen(screen: &shpool_vt100::Screen) -> bool {
+pub fn contents_formatted_reproduces_screen(
+    screen: &shpool_vt100::Screen,
+) -> bool {
     let mut new_input = screen.contents_formatted();
     new_input.extend(screen.input_mode_formatted());
     new_input.extend(screen.title_formatted());
@@ -140,7 +144,9 @@ pub fn contents_formatted_reproduces_screen(screen: &shpool_vt100::Screen) -> bo
     compare_screens(&got_screen, screen)
 }
 
-pub fn rows_formatted_reproduces_screen(screen: &shpool_vt100::Screen) -> bool {
+pub fn rows_formatted_reproduces_screen(
+    screen: &shpool_vt100::Screen,
+) -> bool {
     let mut new_input = vec![];
     let mut wrapped = false;
     for (idx, row) in screen.rows_formatted(0, 80).enumerate() {

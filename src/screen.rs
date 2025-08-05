@@ -277,19 +277,30 @@ impl Screen {
     pub fn last_n_rows_contents_formatted(&self, rows: u16) -> Vec<u8> {
         let mut contents = vec![];
         self.write_contents_formatted_from_rows(
-            self.grid().last_n_rows(rows), &mut contents);
+            self.grid().last_n_rows(rows),
+            &mut contents,
+        );
         contents
     }
 
     fn write_contents_formatted(&self, contents: &mut Vec<u8>) {
-        self.write_contents_formatted_from_rows(self.grid().visible_rows(), contents)
+        self.write_contents_formatted_from_rows(
+            self.grid().visible_rows(),
+            contents,
+        )
     }
 
-    fn write_contents_formatted_from_rows<'a, R>(&self, rows: R, contents: &mut Vec<u8>)
-        where R: Iterator<Item = &'a crate::row::Row>
+    fn write_contents_formatted_from_rows<'a, R>(
+        &self,
+        rows: R,
+        contents: &mut Vec<u8>,
+    ) where
+        R: Iterator<Item = &'a crate::row::Row>,
     {
         crate::term::HideCursor::new(self.hide_cursor()).write_buf(contents);
-        let prev_attrs = self.grid().write_contents_formatted_from_rows(rows, contents);
+        let prev_attrs = self
+            .grid()
+            .write_contents_formatted_from_rows(rows, contents);
         self.attrs.write_escape_code_diff(contents, &prev_attrs);
     }
 
@@ -1342,7 +1353,7 @@ impl Screen {
         }
 
         macro_rules! to_u8 {
-            ($n:expr) => {
+            ($n:expr_2021) => {
                 if let Some(n) = u16_to_u8($n) {
                     n
                 } else {

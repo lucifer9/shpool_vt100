@@ -129,7 +129,10 @@ impl Grid {
 
     /// Return the last n rows, unless there is insufficient scrollback
     /// to do so, in which case, return as many rows as possible.
-    pub fn last_n_rows(&self, rows: u16) -> impl Iterator<Item = &crate::row::Row> {
+    pub fn last_n_rows(
+        &self,
+        rows: u16,
+    ) -> impl Iterator<Item = &crate::row::Row> {
         let rows = rows as usize;
         let (scrollback_rows, rows_rows) = if rows < self.rows.len() {
             (0, rows)
@@ -251,7 +254,8 @@ impl Grid {
         rows: R,
         contents: &mut Vec<u8>,
     ) -> crate::attrs::Attrs
-        where R: Iterator<Item = &'a crate::row::Row>
+    where
+        R: Iterator<Item = &'a crate::row::Row>,
     {
         crate::term::ClearAttrs::default().write_buf(contents);
         crate::term::ClearScreen::default().write_buf(contents);

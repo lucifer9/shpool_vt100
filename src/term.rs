@@ -165,7 +165,7 @@ impl BufWrite for Attrs {
         let mut first = true;
 
         macro_rules! write_param {
-            ($i:expr) => {
+            ($i:expr_2021) => {
                 if first {
                     first = false;
                 } else {
